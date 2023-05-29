@@ -1,0 +1,90 @@
+wget https://archive.apache.org/dist/hadoop/core/hadoop-2.7.3/hadoop-2.7.3.tar.gz
+
+tar -xvf hadoop-2.7.3.tar.gz
+
+sudo mv hadoop-2.7.3 /usr/local/hadoop
+
+ssh-keygen
+
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+-----------------------------------------------------------------------------------------
+wget https://archive.apache.org/dist/hadoop/core/hadoop-2.7.3/hadoop-2.7.3.tar.gz
+  185  tar -xvf hadoop-2.7.3.tar.gz
+  186  clear
+  187  ls
+  188  sudo mv hadoop-2.7.3 /usr/local/hadoop
+  189  sudo nano ~/.bashrc
+  190  echo $PATH
+  191  ls
+  192  sudo nano /etc/hosts
+  193  ssh-keygen
+  194  ls
+  195  cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys
+  196  cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+  197  clear
+  198  nano /usr/local/hadoop/conf/hadoop-env.sh
+  199  cd /usr/local/hadoop
+  200  ls
+  201  cd etc
+  202  ls
+  203  cd hadoop/
+  204  ls
+  205  clear
+  206  cd
+  207  sudo nano ~/.bashrc
+  208  sudo nano /usr/local/hadoop/etc/hadoop/hadoop-env.sh
+  209  sudo nano /usr/local/hadoop/etc/hadoop/core-site.xml
+  210  sudo nano /usr/local/hadoop/etc/hadoop/hadoop-env.sh
+  211  sudo nano /usr/local/hadoop/etc/hadoop/core-site.xml
+  212  sudo nano /usr/local/hadoop/etc/hadoop/hdfs-site.xml
+  213  sudo nano /usr/local/hadoop/etc/hadoop/mapred-site.xml
+  214  clear
+  215  sudo nano /usr/local/hadoop/etc/hadoop/mapred-site.xml
+  216  mkdir /usr/local/hadoop/tmp
+  217  exec bash
+  218  hadoop namenode -format
+  
+  -----------------------------------------
+  sudo apt-get remove openssh-client openssh-server
+  232  sudo apt-get install openssh-client openssh-server
+  233  history
+  234  /usr/local/hadoop/sbin/start-all.sh
+  235  jps
+  236  /usr/local/hadoop/sbin/stop-all.sh
+  237  chmod 0600 ~/.ssh/authorized_keys   
+  238  exec bash
+  239  hadoop namenode -format
+  240  /usr/local/hadoop/sbin/start-all.sh
+  241  jps
+  242  /usr/local/hadoop/sbin/stop-all.sh
+  243  sudo chown -R hadoop  usr/hadoop
+  244  sudo chown -R hadoop  usr/local/hadoop
+  245  sudo chown -R ubuntu  usr/local/hadoop
+  246  sudo chown -R ubuntu  /usr/local/hadoop
+  247  clear
+  248  hadoop namenode -format
+  249  /usr/local/hadoop/sbin/start-all.sh
+  250  jps
+  251  ps aux | grep -i namenode
+  252  hadoop namenode -format
+  253  /usr/local/hadoop/sbin/start-all.sh
+  254  jps
+  255  /usr/local/hadoop/sbin/stop-all.sh
+  256  cd /usr/local/hadoop/
+  257  ls
+  258* 
+  259  ls
+  260  sudo mkdir -p tmp
+  261  ls
+  262  history
+  263  sudo chown -R ubuntu  /usr/local/hadoop
+  264  sudo chown -R ubuntu  /usr/local/hadoop/tmp
+  265  udo chmod 750 tmp
+  266  sudo chmod 750 tmp
+  267  clear
+  268  hdfs namenode -format
+  269  /usr/local/hadoop/sbin/start-all.sh
+  270  jps
+  271  /usr/local/hadoop/sbin/stop-all.sh
+
+

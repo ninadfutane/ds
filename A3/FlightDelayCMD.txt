@@ -1,0 +1,61 @@
+1)
+
+hive
+
+set hive.cli.print.header=true;
+
+show databases;
+
+create database flightDelays;
+
+use flightDelays;
+
+create table DelayedFlights(year int, month int, day int, delay int)
+row format delimited
+fields terminated by ',';
+
+desc DelayedFlights;
+
+//place DelayedFligghts.csv in home
+
+load data local inpath 'DelayedFlights.csv' into table DelayedFlights;
+
+select * from DelayedFlights limit 5;
+
+//find average departure delay per day
+
+select year, month, day, avg(delay) as avg_delay from DelayedFlights group by year, month, day;
+
+
+2)
+
+//load data using hdfs
+
+//ctrl+c to exit hive
+
+hdfs dfs -mkdir /FlightData
+
+hdfs dfs -put DelayedFlights.csv /FlightData
+
+hdfs dfs -ls /FlightData
+
+//enter hive
+
+hive
+
+use flightDelays;
+
+create table HdfsDelayedFlights(year int, month int, day int, delay int)
+row format delimited
+fields terminated by ',';
+
+desc HdfsDelayedFlights;
+
+load data inpath '/FlightData/DelayedFlights.csv' into table HdfsDelayedFlights;
+
+select * from HdfsDelayedFlights limit 5;
+
+//find average departure delay per day
+
+select year, month, day, avg(delay) as avg_delay from HdfsDelayedFlights group by year, month, day;
+

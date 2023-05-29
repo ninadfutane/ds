@@ -1,0 +1,55 @@
+## Scatter Plot
+//Relationship between Petal Width and Petal Length
+1) Open Iris in Tableau
+2) Column - Petal Width
+3) Row - Petal Length
+4) Color - Species
+5) Detail - Id
+
+//Comparison between all species
+1) Column - Species
+2) Row - Petal Length, Petal Width, Sepal Length, Sepal Width
+3) Color - Species
+
+
+//Cluster Visualization
+1) Column - Petal Width
+2) Row - Petal Length
+3) Detail - Id
+4) Go to Analytics section
+5) Drag Cluster on to graph (3 clusters are created)
+6) Click on drop down cluster and then click on describe cluster
+
+//Species Count
+1) Column - Species
+2) Row - Iris.csv (Count)
+3) Color - Species
+
+//Comparison between Species based on Sepal Length and Sepal Width
+1) Column - Sepal Length
+2) Row - Sepal Width
+3) Detail - Id
+4) Color - Species
+
+//Comparison between species based on Petal Length and Petal Width
+1) Column - Petal Length
+2) Row - Petal Width
+3) Detail - Id
+4) Color - Species
+
+//Cluster Visualization 2
+1) Column - Petal Length, Petal Width
+2) Row - Sepal Length, Sepal Width
+3) Detail - Id
+4) Drag Cluster on to graph (3 clusters are created)
+5) Click on drop down cluster and then click on describe cluster
+
+//Histogram of Petal Length and Sepal Length
+1) Column - Petal Length
+2) Row - Sepal Length
+3) Selection Histogram from right dialog box
+
+//Histogram of Petal Width and Sepal Width
+1) Column - Petal Width
+2) Row - Sepal Width
+3) Selection Histogram from right dialog box

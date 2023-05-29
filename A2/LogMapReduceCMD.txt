@@ -1,0 +1,153 @@
+//export hadoop classpath
+
+sudo nano .bashrc
+
+//add following
+
+export CLASSPATH=~/hadoop3.3.4/share/hadoop/mapreduce/:$CLASSPATH
+
+//ctrl+o, enter, ctrl+x
+
+exec bash
+
+//restart hadoop
+
+stop-all.sh
+hadoop namenode -format
+start-all.sh
+jps
+
+//create folder
+
+mkdir Logs
+cd Logs
+
+//create Mapper, Reducer, Driver java files
+
+nano LogMapper.java
+
+//add code
+
+package LogMapReduce;
+
+import java.io.IOException;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapred.*;
+
+public class LogMapper extends MapReduceBase implements Mapper<LongWritable, Text, Text, IntWritable> {
+	private final static IntWritable one = new IntWritable(1);
+
+	public void map(LongWritable key, Text value, OutputCollector<Text, IntWritable> output, Reporter reporter) throws IOException {
+		String valueString = value.toString();
+		String[] SingleIP = valueString.split("-");
+		output.collect(new Text(SingleIP[0]), one);
+	}
+}
+
+//ctrl+o, enter, ctrl+x
+
+nano LogReducer.java
+
+//add code
+
+package LogMapReduce;
+
+import java.io.IOException;
+import java.util.*;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapred.*;
+
+public class LogReducer extends MapReduceBase implements Reducer<Text, IntWritable, Text, IntWritable> {
+
+	public void reduce(Text t_key, Iterator<IntWritable> values, OutputCollector<Text,IntWritable> output, Reporter reporter) throws IOException {
+		Text key = t_key;
+		int frequencyOfIP = 0;
+		while (values.hasNext()) {
+			IntWritable value = (IntWritable) values.next();
+			frequencyOfIP += value.get();
+		}
+		output.collect(key, new IntWritable(frequencyOfIP));
+	}
+}
+
+//ctrl+o, enter, ctrl+x
+
+nano LogDriver.java
+
+//add code
+
+package LogMapReduce;
+
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.*;
+import org.apache.hadoop.mapred.*;
+
+public class LogDriver {
+	public static void main(String[] args) {
+		JobClient my_client = new JobClient();
+		
+		JobConf job_conf = new JobConf(LogDriver.class);
+		
+		job_conf.setJobName("IP_Count");
+
+		job_conf.setOutputKeyClass(Text.class);
+		job_conf.setOutputValueClass(IntWritable.class);
+
+		job_conf.setMapperClass(LogMapReduce.LogMapper.class);
+		job_conf.setReducerClass(LogMapReduce.LogReducer.class);
+
+		job_conf.setInputFormat(TextInputFormat.class);
+		job_conf.setOutputFormat(TextOutputFormat.class);
+
+		FileInputFormat.setInputPaths(job_conf, new Path(args[0]));
+		FileOutputFormat.setOutputPath(job_conf, new Path(args[1]));
+
+		my_client.setConf(job_conf);
+		try {
+			JobClient.runJob(job_conf);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+//ctrl+o, enter, ctrl+x
+
+//java files are created inside Logs folder
+
+javac -cp `hadoop classpath` -d . LogMapper.java LogReducer.java LogDriver.java
+
+//java files are compiled and stored in LogMapReduce package / folder
+
+//rerturn to home
+
+cd
+
+//create jar file of all the content in Logs folder
+
+jar -cvf LogMapReduce.jar -C Logs .
+
+//jar file is created in home
+//place log_file.txt in home 
+
+hdfs dfs -mkdir /LogInput
+
+hdfs dfs -put log_file.txt /LogInput
+
+hdfs dfs -ls /LogInput
+
+//run jar file from home
+
+hadoop jar LogMapReduce.jar LogMapReduce.LogDriver /LogInput /LogOutput
+
+//display output
+
+hdfs dfs -cat /LogOutput/part-00000
+
+
+

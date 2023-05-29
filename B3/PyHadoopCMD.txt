@@ -1,0 +1,85 @@
+1) Mapreduce using python
+
+//check python version is 3
+python3 --version
+
+//In home
+//create text file
+
+nano sample.txt
+
+//write some sample text in file and save the file
+
+//create mapper.py
+
+nano mapper.py
+
+//add code
+
+import sys
+
+for line in sys.stdin:
+    line = line.strip()
+    words = line.split()
+
+    for word in words:
+        print(word,1,sep='\t')
+        
+//ctrl+o, enter, ctrl+x
+
+//create reducer.py
+
+nano reducer.py
+
+//add code
+
+from operator import itemgetter
+import sys
+  
+current_word = None
+current_count = 0
+word = None
+  
+for line in sys.stdin:
+    line = line.strip()
+    word, count = line.split('\t', 1)
+    try:
+        count = int(count)
+    except ValueError:
+        continue
+
+    if current_word == word:
+        current_count += count
+    else:
+        if current_word:
+            print(current_word, current_count,'\t')
+        current_count = count
+        current_word = word
+
+if current_word == word:
+    print(current_word,current_count,sep='\t')
+
+//ctrl+o, enter, ctrl+x
+
+//run map reduce in python
+
+cat sample.txt | python3 mapper.py | sort -k1,1 | python3 reducer.py
+
+2) Run map reduce in hadoop
+
+//put sample.txt in input folder
+
+hdfs dfs -mkdir /words
+
+hdfs dfs -put sample.txt /words
+
+//use hadoop streaming jar for map reduce
+//replace <username> with your username in ubuntu
+
+hadoop jar ~/hadoop-3.3.4/share/hadoop/tools/lib/hadoop-streaming-3.3.4.jar -input /words/sample.txt -output /words/output -mapper "python3 /home/<username>/mapper.py" -reducer "python3 /home/<username>/reducer.py"
+
+//display output
+
+hdfs dfs -cat /words/output/part-00000
+
+
